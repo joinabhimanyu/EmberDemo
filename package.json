@@ -1,0 +1,19 @@
+{
+  "name": "EmberDemo",
+  "version": "0.0.0",
+  "description": "This is a demo ember app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "express": "~4.4.5"
+    },
+  "keywords": [
+    "ember",
+    "node",
+    "express"
+  ],
+  "author": "abhimanyu",
+  "license": "ISC"
+}

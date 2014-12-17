@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="veiwport" content="width=device-width, initial-scale=1.0">
+<title>Ember JS</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/alertify.core.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/alertify.default.css">
+
+</head>
+<body>
+<!-- <div class="page-header">
+<h1>My Ember App</h1>
+</div> -->
+
+<script type="text/x-handlebars">
+	<nav class="navbar navbar-default" role="navigation">
+  	  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Bloggr</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active">{{#link-to 'about'}}About{{/link-to}}</li>
+            <li>{{#link-to 'posts'}}Posts{{/link-to}}</li>
+            <li>{{#link-to 'posts.new'}}Add New Entry{{/link-to}}</li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+     </div><!-- /.container-fluid -->
+    </nav>
+
+	{{outlet}}
+</script>
+
+<script type="text/x-handlebars" id="custom">
+  <p><h4>This is the custom view implemented as footer</h4></p>
+  <p><h4>{{view.cvalue}}</h4></p>
+</script>
+
+<script type="text/x-handlebars" id="home">
+  <div class="jumbotron">
+    <h1>Home</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet lacinia urna. Nulla molestie nulla dolor, eu imperdiet felis condimentum vitae. Donec vitae pretium augue. Aenean porta euismod eros quis congue. Aenean rutrum mi tortor; laoreet placerat nulla ultricies eu. Donec quis lobortis nisl! Curabitur sollicitudin, ligula vel lobortis aliquam, felis augue pulvinar nulla, in sollicitudin augue mauris nec est. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris suscipit elementum velit quis lobortis.</p>
+  </div>
+  <div class="well">{{view App.CustomView}}</div>
+</script>
+
+<script type="text/x-handlebars" id="about">
+	<div class="jumbotron">
+		<h1>About</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet lacinia urna. Nulla molestie nulla dolor, eu imperdiet felis condimentum vitae. Donec vitae pretium augue. Aenean porta euismod eros quis congue. Aenean rutrum mi tortor; laoreet placerat nulla ultricies eu. Donec quis lobortis nisl! Curabitur sollicitudin, ligula vel lobortis aliquam, felis augue pulvinar nulla, in sollicitudin augue mauris nec est. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris suscipit elementum velit quis lobortis.</p>
+	</div>
+  <div class="row" style="margin-left: 100px;">
+    
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="posts">
+<div class="row">
+<div class="col-md-3" style="margin-left:30px;font-size:16px;">
+  <table class="table table-stripped table-bordered">
+      <thead><tr><th>Recent posts</th></tr></thead>
+      {{#each controller}}
+      <tr><td>
+      {{#link-to 'post' this}}
+        <h4>{{title}} <small class="muted">by {{author}}</small></h4>
+      {{/link-to}}
+      </td></tr>
+      {{/each}}
+    </table>
+</div>
+<div class="col-md-8">
+  {{outlet}}
+</div>
+</div>
+</script>
+
+<script type="text/x-handlebars" id="post">
+  <div class="jumbotron">
+    <span><h1>{{format-title title}}</h1><h2>by {{author}} <small class="muted">({{format-date date}})</small></h2></span>
+    <p><h4>{{excerpt}}</h4></p>
+    <p>{{body}}</p>
+    {{#if isEditing}}
+      {{partial 'post/edit'}}
+      <button class="btn btn-primary" {{action 'doneEditing'}}>Done</button>
+    {{else}}
+      <button class="btn btn-success" {{action 'edit'}}>Edit</button>
+    {{/if}}
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="post/_edit">
+  <form class="form-inline" role="form">
+    <div class="form-group">
+      {{input type="text" class="form-control" value=title}}
+    </div>
+    <div class="form-group">
+      {{input type="text" class="form-control" value=excerpt}}
+    </div>
+    <div class="form-group">
+      {{textarea class="form-control" width="500px;" value=body}}
+    </div>
+  </form>
+</script>
+
+<script type="text/x-handlebars" id="posts/new">
+<div class="col-md-6">
+  <form role="form">
+    <div class="form-group">
+      {{input type="text" class="form-control" value=title placeholder="Enter title"}}
+    </div>
+    <div class="form-group">
+      {{input type="text" class="form-control" value=author placeholder="Enter name"}}
+    </div>
+    <div class="form-group">
+      {{input type="date" class="form-control" value=date placeholder="Enter date"}}
+    </div>
+    <div class="form-group">
+      {{input type="text" class="form-control" value=excerpt placeholder="Enter excerpt"}}
+    </div>
+    <div class="form-group">
+      {{textarea class="form-control" width="500px;" value=body}}
+    </div>
+    <div class="form-group">
+      <button class="btn btn-danger" {{action 'createPost'}}>Add</button>
+    </div>
+  </form>
+  </div>
+</script>
+
+
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../bower_components/handlebars/handlebars.js"></script>
+<script type="text/javascript" src="../bower_components/ember/ember.min.js"></script>
+<script type="text/javascript" src="../bower_components/ember-data/ember-data.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript" src="js/showdown.min.js"></script>
+<script type="text/javascript" src="js/alertify.js"></script>
+<script type="text/javascript" src="js/jquery.velocity.min.js"></script>
+<script type="text/javascript" src="js/velocity.ui.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+      // $("#show-posts").velocity("transition.bounceUpOut", 1250);
+      // $("#show-posts").animate({ width: 'hide', 'slow' });
+
+
+  });
+
+</script>
+
+</body>
+</html>
